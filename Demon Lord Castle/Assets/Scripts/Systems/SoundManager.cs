@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("Music Options")]
     [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource sfxSource;
     [SerializeField] AudioClip baseMusic;
     [SerializeField] float fadeDuration;
 
@@ -55,6 +56,14 @@ public class SoundManager : MonoBehaviour
         musicSource.clip = newClip;
         musicSource.Play();
         yield return musicSource.DOFade(1f, fadeDuration).SetUpdate(true).WaitForCompletion();
+    }
+
+    private void PlaySFX(AudioClip newClip)
+    {
+        
+        sfxSource.clip = newClip;
+        sfxSource.Play();
+        
     }
 
     private void Load()

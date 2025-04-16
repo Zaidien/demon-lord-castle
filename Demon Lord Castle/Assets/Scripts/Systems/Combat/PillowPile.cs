@@ -7,6 +7,8 @@ public class PillowPile : MonoBehaviour
     [Header("Initial Setup")]
     public GameObject pillowPile;
     public GameObject pileCollider;
+    public AudioSource replinishSource;
+    public AudioClip pileReplinish;
     public float ammoGive;
     private float ammoSpawn;
 
@@ -33,9 +35,21 @@ public class PillowPile : MonoBehaviour
         else if (!alive && allowRespawn)
         {
             respawnCounter = respawnCounter - Time.deltaTime;
-            Debug.Log($"Respawn timer is at {respawnCounter}");
+            if (respawnCounter > 0) // Make sure to elimate this line when removing the debug line :)
+            Debug.Log($"Respawn timer is at {respawnCounter:0}");
+
             ammoGive = ammoSpawn;
         }
+        else if (!alive && !allowRespawn)
+        {
+            Debug.Log($"{pillowPile.name} can not respawn");
+        }
+    }
+
+    public void PlayReplinish()
+    {
+        replinishSource.clip = pileReplinish;
+        replinishSource.Play();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,16 +59,22 @@ public class PillowPile : MonoBehaviour
              if (other.GetComponent<PlayerShoot>() != null)
              {
                  other.GetComponent<PlayerShoot>().ammoAmount += ammoGive;
+
+                // SoundManager.Instance.PlayPlayerSFX(pileReplinish);
+                PlayReplinish();
+
                 pillowPile.SetActive(false);
                 alive = false;
                 Debug.Log("Pile has died");
+
+
              } 
             else if (other.GetComponent<Bullet>() != null)
             {
                 ammoGive++;
             }
         }
-        else
+        else if (!alive)
         {
             pileCollider.GetComponent<BoxCollider>().enabled = false;
         }

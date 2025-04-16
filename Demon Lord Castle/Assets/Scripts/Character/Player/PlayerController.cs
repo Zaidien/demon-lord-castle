@@ -23,10 +23,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
     private bool isGrounded = true;
     [SerializeField] private LayerMask groundLayer;
+    
     private float groundCheckTimer = 0f;
     private float groundCheckDelay = 0.3f;
     private float playerHeight;
     private float raycastDistance;
+
+    // Audio
+    [Header("Audio")]
+    [SerializeField] private AudioSource playerSFXSource;
+    [SerializeField] private AudioClip jumpSFX;
 
     void Start()
     {
@@ -108,6 +114,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = false;
         groundCheckTimer = groundCheckDelay;
+        PlayPlayerSFX(jumpSFX);
         rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Initial burst for the jump
     }
 
@@ -124,4 +131,11 @@ public class PlayerController : MonoBehaviour
             rb.velocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
         }
     }
+
+    private void PlayPlayerSFX(AudioClip newClip)
+    {
+        playerSFXSource.clip = newClip;
+        playerSFXSource.Play();
+    }
+
 }
