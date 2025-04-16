@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     private Rigidbody rb;
     private bool attackRange;
     private bool attack;
+    private bool attackCooldown;
+    private float attackCooldownTimer;
+
 
     private void Awake()
     {
@@ -35,7 +38,24 @@ public class Enemy : MonoBehaviour
         {
             Vector3 targetPos = Vector3.Slerp(rb.transform.position, player.transform.position, 1f * Time.deltaTime);
             transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+        }
+        else if (attackRange == true)
             attack = true;
+
+        // Attack Player
+        if (attack == true)
+        {
+            attackCooldownTimer = 0.5f;
+            attackCooldown = true;
+        }
+        if (attackCooldown == true && attackCooldownTimer > 0)
+        {
+            attackCooldownTimer -= Time.deltaTime;
+        }
+        else if (attackCooldown == true && attackCooldownTimer <= 0)
+        {
+            attackCooldown = false;
+            attackRange = false;
         }
 
         // Detect nearby enemies for avoidance
