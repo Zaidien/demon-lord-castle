@@ -20,12 +20,13 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
 
         // Move towards player
-        //Vector3 targetPos = Vector3.Slerp(rb.transform.position, player.transform.position, 1f * Time.deltaTime);
-        //transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+        Vector3 targetPos = Vector3.Slerp(rb.transform.position, player.transform.position, 1f * Time.deltaTime);
+        transform.position = new Vector3(targetPos.x, transform.position.y, targetPos.z);
 
         // Detect nearby enemies for avoidance
         //LayerMask enemies = LayerMask.GetMask("Enemy");
         //Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f, enemies);
+
         
 
     }
