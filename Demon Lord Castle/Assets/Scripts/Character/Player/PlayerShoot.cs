@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class PlayerShoot : MonoBehaviour
     public float bulletSpeed;
     public float fireRate, bulletDamage;
     public float ammoAmount;
+    public float ammoMax;
     public bool isAuto;
 
     [Header("Initial Setup")]
@@ -15,7 +18,23 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject gunPrefab;
 
+    [Header("HUD Setup")]
+    [SerializeField] Image gunIcon;
+    public TextMeshProUGUI ammoText;
+
     private float timer;
+
+    public static PlayerShoot Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        ammoText.text = $"{ammoAmount} / {ammoMax}";
+    }
 
     private void Update()
     {
@@ -47,7 +66,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    void Shoot()
+    private void Shoot()
     {
         GameObject piwwoBullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation, GameObject.FindGameObjectWithTag("WorldObjectHolder").transform);
         piwwoBullet.GetComponent<Rigidbody>().AddForce(bulletSpawnTransform.forward * bulletSpeed, ForceMode.Impulse);
@@ -55,5 +74,29 @@ public class PlayerShoot : MonoBehaviour
 
         timer = 1;
         ammoAmount--;
+
+        UpdateAmmo();
+    }
+
+    public void UpdateAmmo()
+    {
+        if (ammoAmount >= ammoMax * .50)
+        {
+            gunIcon.color = Color.green;
+        }
+        else if (ammoAmount >= ammoMax * .25)
+        {
+            gunIcon.color = Color.yellow;
+        }
+        else if(ammoAmount >= ammoMax * .10)
+        {
+            gunIcon.color = Color.red;
+        }
+        else if (ammoAmount == 0)
+        {
+            gunIcon.color = Color.black;
+        }
+
+        ammoText.text = $"{ammoAmount} / {ammoMax}";
     }
 }

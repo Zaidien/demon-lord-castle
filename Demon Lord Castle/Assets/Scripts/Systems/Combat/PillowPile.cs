@@ -11,32 +11,34 @@ public class PillowPile : MonoBehaviour
     public AudioClip pileReplinish;
     public float ammoGive;
     private float ammoSpawn;
+    private PlayerShoot playerShoot;
 
     [Header("Respawn")]
     public bool allowRespawn;
     public float respawnTimer;
-    private float respawnCounter;
+    private float respawnCooldown;
     private bool alive = true;
 
     private void Start()
     {
-        respawnCounter = respawnTimer;
+        respawnCooldown = respawnTimer;
         ammoSpawn = ammoGive;
         
     }
     private void Update()
     {
-        if (respawnCounter <= 0)
+        if (respawnCooldown <= 0)
         {
             pillowPile.SetActive(true);
-            respawnCounter = respawnTimer;
+            pileCollider.GetComponent<Collider>().enabled = true;
+            respawnCooldown = respawnTimer;
             alive = true;
         }
         else if (!alive && allowRespawn)
         {
-            respawnCounter = respawnCounter - Time.deltaTime;
-            if (respawnCounter > 0) // Make sure to elimate this line when removing the debug line :)
-            Debug.Log($"Respawn timer is at {respawnCounter:0}");
+            respawnCooldown = respawnCooldown - Time.deltaTime;
+            if (respawnCooldown > 0) // Make sure to elimate this line when removing the debug line :)
+            Debug.Log($"Respawn timer is at {respawnCooldown:0}");
 
             ammoGive = ammoSpawn;
         }
@@ -54,14 +56,62 @@ public class PillowPile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (alive) 
+        if(!alive)
+        {
+            pileCollider.GetComponent<BoxCollider>().enabled = false;
+            return;
+        }
+
+        PlayerShoot playerShoot = other.GetComponent<PlayerShoot>();
+
+        if (playerShoot != null)
+        {
+            playerShoot.ammoAmount += ammoGive;
+            playerShoot.ammoAmount = Mathf.Min(playerShoot.ammoAmount, playerShoot.ammoMax);
+
+            playerShoot.UpdateAmmo();
+
+            PlayReplinish();
+
+            pillowPile.SetActive(false);
+            alive = false;
+
+            Debug.Log("Pile has died");
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*if (alive) 
         { 
              if (other.GetComponent<PlayerShoot>() != null)
              {
-                 other.GetComponent<PlayerShoot>().ammoAmount += ammoGive;
+                playerShoot = other.GetComponent<PlayerShoot>();
+                 playerShoot.ammoAmount += ammoGive;
+
+                if (playerShoot.ammoAmount > playerShoot.ammoMax)
+                    playerShoot.ammoAmount = playerShoot.ammoMax;
 
                 // SoundManager.Instance.PlayPlayerSFX(pileReplinish);
                 PlayReplinish();
+
+                other.GetComponent<PlayerShoot>().ammoAmount = playerShoot.ammoAmount;
+                
 
                 pillowPile.SetActive(false);
                 alive = false;
@@ -77,7 +127,7 @@ public class PillowPile : MonoBehaviour
         else if (!alive)
         {
             pileCollider.GetComponent<BoxCollider>().enabled = false;
-        }
+        } */
     }
 
 
