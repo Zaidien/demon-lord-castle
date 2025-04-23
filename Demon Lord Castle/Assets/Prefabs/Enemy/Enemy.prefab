@@ -258,7 +258,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
@@ -275,8 +275,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3a9107f3e798544a296c9c361a8b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackHitboxPrefab: {fileID: 6882390063738162380, guid: f2aadc98f8ed7034c82c380dbc1ab4cd, type: 3}
   health: 100
+  timeBetweenAttacks: 0
+  sightRange: 15
+  attackRange: 5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!195 &8034536418198498659
 NavMeshAgent:
   m_ObjectHideFlags: 0
