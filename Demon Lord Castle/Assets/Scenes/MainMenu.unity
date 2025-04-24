@@ -212,7 +212,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1438181255}
+      - m_Target: {fileID: 1615176569}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
@@ -490,6 +490,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 2123314605}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -842,6 +854,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySelect
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1638,6 +1662,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2053120513}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -2062,6 +2098,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1300718751}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: WantsToExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2508,6 +2556,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1130745253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2737,7 +2797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Art made by ChatGPT (Test Background is)
+  m_text: 'Image made by ChatGPT '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e0a6080ee298ea6429924f27085adc47, type: 2}
   m_sharedMaterial: {fileID: -6856501367731263562, guid: e0a6080ee298ea6429924f27085adc47, type: 2}
@@ -3345,17 +3405,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418901939}
   m_CullTransparentMesh: 1
---- !u!114 &1438181255 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6159861152404198382, guid: 1d01a6c58dbe2ca4aae1e34dc9a06449, type: 3}
-  m_PrefabInstance: {fileID: 5848547265027876753}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca3805d05150db3408b2b3320f68837d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1523879997
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,6 +3512,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1615176569}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlaySelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1523880000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3501,6 +3562,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523879997}
   m_CullTransparentMesh: 1
+--- !u!114 &1615176569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2267973309253830210, guid: 1d01a6c58dbe2ca4aae1e34dc9a06449, type: 3}
+  m_PrefabInstance: {fileID: 5848547265027876753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3805d05150db3408b2b3320f68837d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1665302791
 GameObject:
   m_ObjectHideFlags: 0
@@ -4216,6 +4288,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2267973309253830210, guid: 1d01a6c58dbe2ca4aae1e34dc9a06449, type: 3}
+      propertyPath: volumeText
+      value: 
+      objectReference: {fileID: 488093239}
+    - target: {fileID: 2267973309253830210, guid: 1d01a6c58dbe2ca4aae1e34dc9a06449, type: 3}
+      propertyPath: volumeSlider
+      value: 
+      objectReference: {fileID: 164319268}
     - target: {fileID: 3557268639916089454, guid: 1d01a6c58dbe2ca4aae1e34dc9a06449, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

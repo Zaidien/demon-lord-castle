@@ -12,18 +12,31 @@ public class SoundManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI volumeText;
     [SerializeField] int letterPerSecond;
 
-    [Header("Music Options")]
+    [Header("Menu Audio")]
     [SerializeField] AudioSource musicSource;
-    [SerializeField] AudioSource sfxSource;
+    [SerializeField] AudioSource selectSource;
+    [SerializeField] AudioSource backSource;
+    [SerializeField] AudioSource gameStartSource;
+    [SerializeField] AudioSource moveSource;
+
+    [SerializeField] AudioClip selectClip;
+    [SerializeField] AudioClip backClip;
+    [SerializeField] AudioClip gameStartClip;
+    [SerializeField] AudioClip moveClip;
     [SerializeField] AudioClip baseMusic;
     [SerializeField] float fadeDuration;
+    public float gameStartLength => gameStartClip.length;
 
-    public static SoundManager Instance { get; private set; }
-
+    public static SoundManager instance {get; private set;}
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        } 
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     void Start()
     {
@@ -58,12 +71,37 @@ public class SoundManager : MonoBehaviour
         yield return musicSource.DOFade(1f, fadeDuration).SetUpdate(true).WaitForCompletion();
     }
 
-    private void PlaySFX(AudioClip newClip)
+
+
+    private void PlaySFX(AudioSource source, AudioClip newClip)
     {
-        
-        sfxSource.clip = newClip;
-        sfxSource.Play();
-        
+        if (source != null && newClip != null)
+        {
+            source.clip = newClip;
+            source.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Missing AudioSource or AudioClip in PlaySFX");
+        }
+    }
+
+    // Menu SFX's 
+
+    public void PlaySelect()
+    {
+        PlaySFX(selectSource, selectClip);
+    }
+
+    public float PlayGameStart()
+    {
+        PlaySFX(gameStartSource, gameStartClip);
+        return gameStartClip.length;
+    }
+
+    public void PlayBack()
+    {
+        PlaySFX(backSource, backClip);
     }
 
     private void Load()

@@ -107,7 +107,7 @@ public class PillowPile : MonoBehaviour
                 if (playerShoot.ammoAmount > playerShoot.ammoMax)
                     playerShoot.ammoAmount = playerShoot.ammoMax;
 
-                // SoundManager.Instance.PlayPlayerSFX(pileReplinish);
+                // SoundManager.instance.PlayPlayerSFX(pileReplinish);
                 PlayReplinish();
 
                 other.GetComponent<PlayerShoot>().ammoAmount = playerShoot.ammoAmount;

@@ -29,16 +29,22 @@ public class PlayerController : MonoBehaviour
     private float playerHeight;
     private float raycastDistance;
 
-    // Audio
     [Header("Audio")]
-    [SerializeField] private AudioSource playerSFXSource;
-    [SerializeField] private AudioClip jumpSFX;
+    [SerializeField] private float footstepInterval = 0.4f; // Adjust based on walk/run if we implment that 
+    private float footstepTimer = 0f; 
+
+    private PlayerSoundController soundController;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         cameraTransform = Camera.main.transform;
+
+        // Player Sound Managaer
+        soundController = GetComponent<PlayerSoundController>();
+
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
@@ -92,6 +98,17 @@ public class PlayerController : MonoBehaviour
         velocity.z = targetVelocity.z;
         rb.velocity = velocity;
 
+        // --- Play footsteps if moving ---
+        if (isGrounded && movement.magnitude > 0.1f)
+        {
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                soundController.PlayFootstep();
+                footstepTimer = footstepInterval; // e.g., 0.4f for normal walk speed
+            }
+        }
+
         // If we aren't moving and are on the ground, stop velocity so we don't slide
         if (isGrounded && moveHorizontal == 0 && moveForward == 0)
         {
@@ -114,8 +131,8 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = false;
         groundCheckTimer = groundCheckDelay;
-        PlayPlayerSFX(jumpSFX);
         rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z); // Initial burst for the jump
+        soundController.PlayJump();
     }
 
     void ApplyJumpPhysics()
@@ -130,12 +147,6 @@ public class PlayerController : MonoBehaviour
             // Rising: Change multiplier to make player reach peak of jump faster
             rb.velocity += Vector3.up * Physics.gravity.y * ascendMultiplier * Time.fixedDeltaTime;
         }
-    }
-
-    private void PlayPlayerSFX(AudioClip newClip)
-    {
-        playerSFXSource.clip = newClip;
-        playerSFXSource.Play();
     }
 
 }
