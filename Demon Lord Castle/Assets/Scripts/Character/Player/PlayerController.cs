@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallMultiplier = 2.5f; // Multiplies gravity when falling down
     [SerializeField] private float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
     private bool isGrounded = true;
+    private bool wasGroundedLastFrame; 
     [SerializeField] private LayerMask groundLayer;
     
     private float groundCheckTimer = 0f;
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
+        wasGroundedLastFrame = isGrounded;
+
         // Checking when we're on the ground and keeping track of our ground check delay
         if (!isGrounded && groundCheckTimer <= 0f)
         {
@@ -76,6 +79,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             groundCheckTimer -= Time.deltaTime;
+        }
+
+        if (!wasGroundedLastFrame && isGrounded)
+        {
+            soundController.PlayLand();
         }
 
     }
