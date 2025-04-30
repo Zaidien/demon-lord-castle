@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerSoundController soundController;
 
-    private float health = 100;
+    public float health = 100;
     private float damageCooldownCount;
     private bool damageCooldown;
 
