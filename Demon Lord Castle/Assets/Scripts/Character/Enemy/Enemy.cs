@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject player;
     //private Rigidbody rb;
+    private GameObject attackHitbox;
 
     private Vector3 walkPoint;
     bool walkPointSet;
@@ -28,6 +29,8 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
         //rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+
+        attackHitbox = transform.GetChild(1).gameObject;
 
     }
 
@@ -88,7 +91,7 @@ public class Enemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            // insert attack code
+            attackHitbox.SetActive(true);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -97,6 +100,7 @@ public class Enemy : MonoBehaviour
 
     private void ResetAttack()
     {
+        attackHitbox.SetActive(false);
         alreadyAttacked = false;
     }
 }

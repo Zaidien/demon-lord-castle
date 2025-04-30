@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,6 +38,10 @@ public class PlayerController : MonoBehaviour
 
     private PlayerSoundController soundController;
 
+    private float health = 100;
+    private float damageCooldownCount;
+    private bool damageCooldown;
+
 
     void Start()
     {
@@ -58,7 +64,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
+        if (health <= 0) KillPlayer();  // Loads Main Menu once health reaches 0
+
+        if (damageCooldownCount > 0 && damageCooldown == true)
+            damageCooldownCount -= Time.deltaTime;
+        else if (damageCooldownCount <= 0)
+            damageCooldown = false;
+
+            moveHorizontal = Input.GetAxisRaw("Horizontal");
         moveForward = Input.GetAxisRaw("Vertical");
 
         RotateCamera();
@@ -157,4 +170,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void KillPlayer()
+    {
+        SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        GameObject collidingObject = other.gameObject;
+
+        if (collidingObject.CompareTag("Enemy") && damageCooldown == false)  // Taking Damage
+        {
+            health -= 25;
+            damageCooldown = true;
+            damageCooldownCount = 1f;
+        }
+    }
 }
