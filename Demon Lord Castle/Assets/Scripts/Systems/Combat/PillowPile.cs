@@ -78,56 +78,6 @@ public class PillowPile : MonoBehaviour
 
             Debug.Log("Pile has died");
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*if (alive) 
-        { 
-             if (other.GetComponent<PlayerShoot>() != null)
-             {
-                playerShoot = other.GetComponent<PlayerShoot>();
-                 playerShoot.ammoAmount += ammoGive;
-
-                if (playerShoot.ammoAmount > playerShoot.ammoMax)
-                    playerShoot.ammoAmount = playerShoot.ammoMax;
-
-                // SoundManager.instance.PlayPlayerSFX(pileReplinish);
-                PlayReplinish();
-
-                other.GetComponent<PlayerShoot>().ammoAmount = playerShoot.ammoAmount;
-                
-
-                pillowPile.SetActive(false);
-                alive = false;
-                Debug.Log("Pile has died");
-
-
-             } 
-            else if (other.GetComponent<Bullet>() != null)
-            {
-                ammoGive++;
-            }
-        }
-        else if (!alive)
-        {
-            pileCollider.GetComponent<BoxCollider>().enabled = false;
-        } */
     }
 
 

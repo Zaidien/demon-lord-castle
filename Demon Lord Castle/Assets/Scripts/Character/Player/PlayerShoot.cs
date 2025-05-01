@@ -28,9 +28,13 @@ public class PlayerShoot : MonoBehaviour
 
     public static PlayerShoot Instance;
 
+    PlayerSoundController soundController;
+
     private void Awake()
     {
         Instance = this;
+        soundController = GetComponent<PlayerSoundController>();
+
     }
 
     private void Start()
@@ -77,6 +81,8 @@ public class PlayerShoot : MonoBehaviour
             GameObject.FindGameObjectWithTag("WorldObjectHolder").transform);
 
        piwwoBullet.transform.localScale = transform.localScale;
+
+        soundController.PlayAttack();
 
         piwwoBullet.GetComponent<Rigidbody>().AddForce(
             bulletSpawnTransform.forward * bulletSpeed, 
