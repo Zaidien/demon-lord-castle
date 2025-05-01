@@ -24,6 +24,8 @@ public class PlayerShoot : MonoBehaviour
 
     private float timer;
 
+    private Vector3 playerScale;
+
     public static PlayerShoot Instance;
 
     private void Awake()
@@ -68,8 +70,18 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject piwwoBullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation, GameObject.FindGameObjectWithTag("WorldObjectHolder").transform);
-        piwwoBullet.GetComponent<Rigidbody>().AddForce(bulletSpawnTransform.forward * bulletSpeed, ForceMode.Impulse);
+        GameObject piwwoBullet = Instantiate(
+            bulletPrefab, 
+            bulletSpawnTransform.position, 
+            bulletSpawnTransform.rotation, 
+            GameObject.FindGameObjectWithTag("WorldObjectHolder").transform);
+
+       piwwoBullet.transform.localScale = transform.localScale;
+
+        piwwoBullet.GetComponent<Rigidbody>().AddForce(
+            bulletSpawnTransform.forward * bulletSpeed, 
+            ForceMode.Impulse);
+
         piwwoBullet.GetComponent<Bullet>().damage = bulletDamage;
 
         timer = 1;

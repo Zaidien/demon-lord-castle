@@ -1563,6 +1563,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   footstepInterval: 0.4
+  health: 100
 --- !u!114 &4765142760875955410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,9 +1578,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: -10
   fireRate: 1.5
-  bulletDamage: 15
-  ammoAmount: 5
-  ammoMax: 0
+  bulletDamage: 20
+  ammoAmount: 25
+  ammoMax: 30
   isAuto: 0
   bulletSpawnTransform: {fileID: 3387249764929121357}
   bulletPrefab: {fileID: 2535896736655852200, guid: e332f2050b92c844e9146798bef9e8d1, type: 3}
