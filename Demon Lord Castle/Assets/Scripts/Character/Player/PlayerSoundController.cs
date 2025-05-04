@@ -9,6 +9,7 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private AudioSource jumpSource;
     [SerializeField] private AudioSource landSource;
     [SerializeField] private AudioSource attackSource;
+    [SerializeField] private AudioSource damageSource;
 
     [Header("Pitch Variety")]
     [SerializeField] float minPitch = 0.9f;
@@ -28,6 +29,7 @@ public class PlayerSoundController : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private List<AudioClip> attackClips;
+    [SerializeField] private List<AudioClip> damageClips;
 
     private void Start()
     {
@@ -130,6 +132,20 @@ public class PlayerSoundController : MonoBehaviour
             Debug.LogWarning("Attack Clips is Null");
         else if (attackClips.Count <= 0)
             Debug.LogWarning("No Attack Clips");
+    }
+    public void PlayDamage()
+    {
+        if (damageClips != null && damageClips.Count > 0)
+        {
+            AudioClip chosen = damageClips[Random.Range(0, damageClips.Count)];
+
+            damageSource.pitch = Random.Range(minPitch, maxPitch);
+            damageSource.PlayOneShot(chosen);
+        }
+        else if (damageClips == null)
+            Debug.LogWarning("Damage Clips is Null");
+        else if (damageClips.Count <= 0)
+            Debug.LogWarning("No Damage Clips");
     }
 
 

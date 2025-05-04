@@ -24,6 +24,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask groundMask, playerMask;
 
 
+    private GameObject sceneGameObject;
+    private SceneMusicSetter sceneMusic;
+    public AudioClip combatMusic;
+    private AudioClip backgroundMusic;
+
+
     private void Awake()
     {
         player = GameObject.Find("Player");
@@ -32,6 +38,24 @@ public class Enemy : MonoBehaviour
 
         attackHitbox = transform.GetChild(1).gameObject;
 
+        sceneGameObject = GameObject.FindGameObjectWithTag("SceneMusicManager");
+        sceneMusic = sceneGameObject.GetComponent<SceneMusicSetter>();
+        if (sceneMusic == null)
+            Debug.Log("Scene Music is null");
+
+    }
+
+    private void Start()
+    {
+        if (combatMusic == null)
+        {
+            combatMusic = sceneMusic.combatMusic;
+        }
+
+        if (backgroundMusic == null)
+        {
+            backgroundMusic = sceneMusic.backgroundMusic;
+        }
     }
 
     private void Update()
@@ -53,6 +77,7 @@ public class Enemy : MonoBehaviour
 
     private void Patroling()
     {
+
         if (!walkPointSet) 
             SearchWalkPoint();
 
@@ -80,7 +105,9 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+
         agent.SetDestination(player.transform.position);
+
     }
 
     private void AttackPlayer()
@@ -96,6 +123,7 @@ public class Enemy : MonoBehaviour
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+
     }
 
     private void ResetAttack()

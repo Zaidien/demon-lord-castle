@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WorldObjectHolder
   - Enemy
+  - SceneMusicManager
   layers:
   - Default
   - TransparentFX

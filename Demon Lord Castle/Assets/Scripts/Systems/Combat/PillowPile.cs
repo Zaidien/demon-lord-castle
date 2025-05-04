@@ -78,6 +78,12 @@ public class PillowPile : MonoBehaviour
 
             Debug.Log("Pile has died");
         }
+        else
+        {
+            ammoGive++;
+            if (ammoGive > 30)
+                ammoGive = 30;
+        }
     }
 
 
