@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player");
-        //rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
 
         attackHitbox = transform.GetChild(1).gameObject;
