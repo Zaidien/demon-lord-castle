@@ -16,13 +16,14 @@ public class EnemySoundController : MonoBehaviour
     [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private AudioClip enemyHurt;
 
-    [HideInInspector] public bool idleIsPlaying;
-    [HideInInspector] public bool attackIsPlaying;
-    [HideInInspector] public bool deathIsPlaying;
-    [HideInInspector] public bool hurtIsPlaying;
+    public bool idleIsPlaying = false;
+    public bool attackIsPlaying = false;
+    public bool deathIsPlaying = false;
+    public bool hurtIsPlaying = false;
 
     void Update()
     {
+        Debug.Log(enemyAttackSource.isPlaying);
         // check if idle sound clip is playing
         if (enemyIdleSource.isPlaying)
             idleIsPlaying = true;

@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     public float health;
     private NavMeshAgent agent;
     private GameObject player;
-    //private Rigidbody rb;
     private GameObject attackHitbox;
     private float deathAnimTimer = 2.3f;
 
@@ -74,6 +73,7 @@ public class Enemy : MonoBehaviour
             if (deathAnimTimer <= 0f)
                 Destroy(gameObject);
         }
+        Debug.Log(health);
 
         // Detecting players and determining range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
@@ -103,6 +103,8 @@ public class Enemy : MonoBehaviour
         //    walkPointSet = false;
 
         animator.SetBool("isMoving", false);
+        if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
+            soundController.PlayEnemyIdle();
     }
 
     private void SearchWalkPoint()
@@ -122,6 +124,8 @@ public class Enemy : MonoBehaviour
 
         agent.SetDestination(player.transform.position);
         animator.SetBool("isMoving", true);
+        //if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
+        //    soundController.PlayEnemyIdle();
 
     }
 
@@ -135,7 +139,7 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("isAttacking", true);
             attackHitbox.SetActive(true);
-            if (!soundController.attackIsPlaying)
+            if (!soundController.attackIsPlaying && !soundController.deathIsPlaying)
                 soundController.PlayEnemyAttack();
 
             alreadyAttacked = true;
