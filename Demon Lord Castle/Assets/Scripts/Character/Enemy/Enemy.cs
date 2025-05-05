@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,8 @@ public class Enemy : MonoBehaviour
     private SceneMusicSetter sceneMusic;
     public AudioClip combatMusic;
     private AudioClip backgroundMusic;
+
+    [SerializeField] private Animator animator;
 
 
     private void Awake()
@@ -89,6 +92,8 @@ public class Enemy : MonoBehaviour
         // Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+
+        //animator.
     }
 
     private void SearchWalkPoint()
