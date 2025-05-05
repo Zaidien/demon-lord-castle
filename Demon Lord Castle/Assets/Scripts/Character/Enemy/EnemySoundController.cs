@@ -23,7 +23,7 @@ public class EnemySoundController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(enemyAttackSource.isPlaying);
+        Debug.Log(enemyDeathSource.isPlaying);
         // check if idle sound clip is playing
         if (enemyIdleSource.isPlaying)
             idleIsPlaying = true;
