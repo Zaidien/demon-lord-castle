@@ -70,4 +70,6 @@ public class EnemySoundController : MonoBehaviour
         enemyHurtSource.clip = enemyHurt;
         enemyHurtSource.Play();
     }
+
+    
 }

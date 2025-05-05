@@ -85,6 +85,8 @@ public class Enemy : MonoBehaviour
             ChasePlayer();
         if (playerInAttackRange && playerInSightRange && !animator.GetBool("isDying"))
             AttackPlayer();
+
+        
     }
 
     private void Patroling()
@@ -101,6 +103,9 @@ public class Enemy : MonoBehaviour
         // Walkpoint reached
         //if (distanceToWalkPoint.magnitude < 1f)
         //    walkPointSet = false;
+
+        // Check to play Idle Sound
+        
 
         animator.SetBool("isMoving", false);
         if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
