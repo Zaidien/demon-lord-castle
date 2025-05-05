@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     private AudioClip backgroundMusic;
 
     [SerializeField] private Animator animator;
+    [SerializeField] private EnemySoundController soundController;
 
 
     private void Awake()
@@ -68,6 +69,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             animator.SetBool("isDying", true);
+            soundController.PlayEnemyDeath();
             deathAnimTimer -= Time.deltaTime;
             if (deathAnimTimer <= 0f)
                 Destroy(gameObject);
