@@ -16,10 +16,10 @@ public class EnemySoundController : MonoBehaviour
     [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private AudioClip enemyHurt;
 
-    public bool idleIsPlaying;
-    public bool attackIsPlaying;
-    public bool deathIsPlaying;
-    public bool hurtIsPlaying;
+    [HideInInspector] public bool idleIsPlaying;
+    [HideInInspector] public bool attackIsPlaying;
+    [HideInInspector] public bool deathIsPlaying;
+    [HideInInspector] public bool hurtIsPlaying;
 
     void Update()
     {
@@ -38,8 +38,6 @@ public class EnemySoundController : MonoBehaviour
         // check if death sound clip is playing
         if (enemyDeathSource.isPlaying)
             deathIsPlaying = true;
-        else
-            deathIsPlaying = false;
 
         // check if hurt sound clip is playing
         if (enemyHurtSource.isPlaying)

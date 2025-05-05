@@ -69,7 +69,8 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             animator.SetBool("isDying", true);
-            soundController.PlayEnemyDeath();
+            if (!soundController.deathIsPlaying)
+                soundController.PlayEnemyDeath();
             deathAnimTimer -= Time.deltaTime;
             if (deathAnimTimer <= 0f)
                 Destroy(gameObject);
@@ -135,6 +136,8 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("isAttacking", true);
             attackHitbox.SetActive(true);
+            if (!soundController.attackIsPlaying)
+                soundController.PlayEnemyAttack();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
