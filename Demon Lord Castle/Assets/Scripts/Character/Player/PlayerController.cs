@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         if (collidingObject.CompareTag("Enemy") && damageCooldown == false)  // Taking Damage
         {
             health -= 25;
+            soundController.PlayDamage();
             damageCooldown = true;
             damageCooldownCount = 1f;
         }

@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     public float damage;
     public float lifeTime = 3;
 
+    EnemySoundController enemySoundController;
+
     private void Update()
     {
         lifeTime -= Time.deltaTime;
@@ -19,8 +21,13 @@ public class Bullet : MonoBehaviour
     {
         if (other.GetComponent<Enemy>() != null)
         {
-            other.GetComponent<Enemy>().health -= damage;
-          
+            
+            float newHealth = other.GetComponent<Enemy>().health -= damage;
+            //if (!other.GetComponent<EnemySoundController>().hurtIsPlaying && other.GetComponent<Enemy>().health > 0)
+            //    other.GetComponent<EnemySoundController>().PlayEnemyHurt();
+
+            if (newHealth > 0)
+                other.GetComponent<EnemySoundController>().PlayEnemyHurt();
         }
 
         Destroy(gameObject);

@@ -63,6 +63,11 @@ public class SoundManager : MonoBehaviour
         volumeText.text = $"{volumeSlider.value * 100:0.0}% ";
     }
 
+    public void PlayMusic(AudioClip newMusic)
+    {
+        StartCoroutine(FadeToNewMusic(newMusic, fadeDuration));
+    }
+
     public IEnumerator FadeToNewMusic(AudioClip newClip, float fadeDuration)
     {
         yield return musicSource.DOFade(0f, fadeDuration).SetUpdate(true).WaitForCompletion();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,8 +9,8 @@ public class Enemy : MonoBehaviour
     public float health;
     private NavMeshAgent agent;
     private GameObject player;
-    //private Rigidbody rb;
     private GameObject attackHitbox;
+    private float deathAnimTimer = 2.3f;
 
     private Vector3 walkPoint;
     bool walkPointSet;
@@ -24,46 +25,91 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask groundMask, playerMask;
 
 
+    private GameObject sceneGameObject;
+    private SceneMusicSetter sceneMusic;
+    public AudioClip combatMusic;
+    private AudioClip backgroundMusic;
+
+    [SerializeField] private Animator animator;
+    [SerializeField] private EnemySoundController soundController;
+
+
     private void Awake()
     {
         player = GameObject.Find("Player");
-        //rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
 
         attackHitbox = transform.GetChild(1).gameObject;
+
+        sceneGameObject = GameObject.FindGameObjectWithTag("SceneMusicManager");
+        sceneMusic = sceneGameObject.GetComponent<SceneMusicSetter>();
+        if (sceneMusic == null)
+            Debug.Log("Scene Music is null");
+
+    }
+
+    private void Start()
+    {
+        if (combatMusic == null)
+        {
+            combatMusic = sceneMusic.combatMusic;
+        }
+
+        if (backgroundMusic == null)
+        {
+            backgroundMusic = sceneMusic.backgroundMusic;
+        }
 
     }
 
     private void Update()
     {
         if (health <= 0)
-            Destroy(gameObject);
+        {
+            animator.SetBool("isDying", true);
+            if (!soundController.deathIsPlaying)
+                soundController.PlayEnemyDeath();
+            deathAnimTimer -= Time.deltaTime;
+            if (deathAnimTimer <= 0f)
+                Destroy(gameObject);
+        }
+        Debug.Log(health);
 
         // Detecting players and determining range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerMask);
 
-        if (!playerInSightRange && !playerInAttackRange)
+        if (!playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             Patroling();
-        if (playerInSightRange && !playerInAttackRange)
+        if (playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             ChasePlayer();
-        if (playerInAttackRange && playerInSightRange)
+        if (playerInAttackRange && playerInSightRange && !animator.GetBool("isDying"))
             AttackPlayer();
+
+        
     }
 
     private void Patroling()
     {
-        if (!walkPointSet) 
-            SearchWalkPoint();
 
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
+        //if (!walkPointSet) 
+        //    SearchWalkPoint();
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        //if (walkPointSet)
+        //    agent.SetDestination(walkPoint);
+
+        //Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         // Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
+        //if (distanceToWalkPoint.magnitude < 1f)
+        //    walkPointSet = false;
+
+        // Check to play Idle Sound
+        
+
+        animator.SetBool("isMoving", false);
+        if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
+            soundController.PlayEnemyIdle();
     }
 
     private void SearchWalkPoint()
@@ -80,7 +126,12 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+
         agent.SetDestination(player.transform.position);
+        animator.SetBool("isMoving", true);
+        //if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
+        //    soundController.PlayEnemyIdle();
+
     }
 
     private void AttackPlayer()
@@ -91,16 +142,21 @@ public class Enemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            animator.SetBool("isAttacking", true);
             attackHitbox.SetActive(true);
+            if (!soundController.attackIsPlaying && !soundController.deathIsPlaying)
+                soundController.PlayEnemyAttack();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+
     }
 
     private void ResetAttack()
     {
         attackHitbox.SetActive(false);
         alreadyAttacked = false;
+        animator.SetBool("isAttacking", false);
     }
 }

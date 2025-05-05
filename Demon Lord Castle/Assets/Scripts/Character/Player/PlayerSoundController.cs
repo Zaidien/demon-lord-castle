@@ -9,6 +9,11 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private AudioSource jumpSource;
     [SerializeField] private AudioSource landSource;
     [SerializeField] private AudioSource attackSource;
+    [SerializeField] private AudioSource damageSource;
+
+    [Header("Pitch Variety")]
+    [SerializeField] float minPitch = 0.9f;
+    [SerializeField] float maxPitch = 1.1f;
 
     [Header("Footsteps")]  // FS = Footsteps
     [SerializeField] private LayerMask groundLayer;
@@ -23,8 +28,21 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private AudioClip tileLandClip;
 
     [Header("Other")]
-    [SerializeField] private AudioClip attackClip;
+    [SerializeField] private List<AudioClip> attackClips;
+    [SerializeField] private List<AudioClip> damageClips;
 
+    private void Start()
+    {
+        // Debug Purposes 
+        if (footstepSource == null)
+            Debug.LogWarning("Footstep Audio Source is not set!");
+        if (jumpSource == null)
+            Debug.LogWarning("Jump Audio Source is not set!");
+        if (landSource == null)
+            Debug.LogWarning("Land Audio Source is not set!");
+        if (attackSource == null)
+            Debug.LogWarning("Attack Audio Source is not set!");
+    }
     public void PlayFootstep()
     {
         RaycastHit hit;
@@ -52,6 +70,10 @@ public class PlayerSoundController : MonoBehaviour
                 if (clipsToUse != null && clipsToUse.Count > 0)
                 {
                     AudioClip chosen = clipsToUse[Random.Range(0, clipsToUse.Count)];
+
+                    // Set random pitch
+                    footstepSource.pitch = Random.Range(minPitch, maxPitch);
+
                     footstepSource.PlayOneShot(chosen);
                 }
             }
@@ -99,8 +121,31 @@ public class PlayerSoundController : MonoBehaviour
 
     public void PlayAttack()
     {
-        attackSource.clip = attackClip;
-        attackSource.Play();
+        if (attackClips != null && attackClips.Count > 0)
+        {
+            AudioClip chosen = attackClips[Random.Range(0, attackClips.Count)];
+
+            attackSource.pitch = Random.Range(minPitch, maxPitch);
+            attackSource.PlayOneShot(chosen);
+        }
+        else if (attackClips == null)
+            Debug.LogWarning("Attack Clips is Null");
+        else if (attackClips.Count <= 0)
+            Debug.LogWarning("No Attack Clips");
+    }
+    public void PlayDamage()
+    {
+        if (damageClips != null && damageClips.Count > 0)
+        {
+            AudioClip chosen = damageClips[Random.Range(0, damageClips.Count)];
+
+            damageSource.pitch = Random.Range(minPitch, maxPitch);
+            damageSource.PlayOneShot(chosen);
+        }
+        else if (damageClips == null)
+            Debug.LogWarning("Damage Clips is Null");
+        else if (damageClips.Count <= 0)
+            Debug.LogWarning("No Damage Clips");
     }
 
 
