@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     //private Rigidbody rb;
     private GameObject attackHitbox;
+    private float deathAnimTimer = 2.3f;
 
     private Vector3 walkPoint;
     bool walkPointSet;
@@ -59,41 +60,48 @@ public class Enemy : MonoBehaviour
         {
             backgroundMusic = sceneMusic.backgroundMusic;
         }
+
+        animator.SetBool("isAttacking", false);
     }
 
     private void Update()
     {
         if (health <= 0)
-            Destroy(gameObject);
+        {
+            animator.SetBool("isDying", true);
+            deathAnimTimer -= Time.deltaTime;
+            if (deathAnimTimer <= 0f)
+                Destroy(gameObject);
+        }
 
         // Detecting players and determining range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerMask);
 
-        if (!playerInSightRange && !playerInAttackRange)
+        if (!playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             Patroling();
-        if (playerInSightRange && !playerInAttackRange)
+        if (playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             ChasePlayer();
-        if (playerInAttackRange && playerInSightRange)
+        if (playerInAttackRange && playerInSightRange && !animator.GetBool("isDying"))
             AttackPlayer();
     }
 
     private void Patroling()
     {
 
-        if (!walkPointSet) 
-            SearchWalkPoint();
+        //if (!walkPointSet) 
+        //    SearchWalkPoint();
 
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
+        //if (walkPointSet)
+        //    agent.SetDestination(walkPoint);
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        //Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         // Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
+        //if (distanceToWalkPoint.magnitude < 1f)
+        //    walkPointSet = false;
 
-        //animator.
+        animator.SetBool("isMoving", false);
     }
 
     private void SearchWalkPoint()
@@ -112,6 +120,7 @@ public class Enemy : MonoBehaviour
     {
 
         agent.SetDestination(player.transform.position);
+        animator.SetBool("isMoving", true);
 
     }
 
