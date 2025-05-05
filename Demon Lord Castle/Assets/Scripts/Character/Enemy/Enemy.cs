@@ -61,7 +61,6 @@ public class Enemy : MonoBehaviour
             backgroundMusic = sceneMusic.backgroundMusic;
         }
 
-        animator.SetBool("isAttacking", false);
     }
 
     private void Update()
@@ -132,6 +131,7 @@ public class Enemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            animator.SetBool("isAttacking", true);
             attackHitbox.SetActive(true);
 
             alreadyAttacked = true;
@@ -144,5 +144,6 @@ public class Enemy : MonoBehaviour
     {
         attackHitbox.SetActive(false);
         alreadyAttacked = false;
+        animator.SetBool("isAttacking", false);
     }
 }
