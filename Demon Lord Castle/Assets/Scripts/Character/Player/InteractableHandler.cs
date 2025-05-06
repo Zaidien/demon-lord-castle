@@ -44,10 +44,20 @@ public class InteractableHandler : MonoBehaviour
                         Debug.LogWarning("No scene to load!");
                         return;
                     }
-                    SceneManager.LoadScene(sceneToLoad);
-                    SoundManager.instance.PlaySelect();
+                    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                    SceneManager.LoadScene(currentSceneIndex + 1);
+                    SoundManager.instance?.PlaySelect();
                     interactTextUI.SetActive(false);
-                    
+
+                    if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
+                    {
+                        SceneManager.LoadScene(currentSceneIndex + 1);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("No more scenes in build settings.");
+                    }
+
                 }
             }
             else

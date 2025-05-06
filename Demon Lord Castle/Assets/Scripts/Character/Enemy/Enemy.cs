@@ -30,12 +30,17 @@ public class Enemy : MonoBehaviour
     public AudioClip combatMusic;
     private AudioClip backgroundMusic;
 
+    private bool isInCombat = false;
+    public static List<Enemy> activeEnemies = new List<Enemy>();
+
+
     [SerializeField] private Animator animator;
     [SerializeField] private EnemySoundController soundController;
 
 
     private void Awake()
     {
+        activeEnemies.Add(this);
         player = GameObject.Find("Player");
         agent = GetComponent<NavMeshAgent>();
 
@@ -71,13 +76,31 @@ public class Enemy : MonoBehaviour
                 soundController.PlayEnemyDeath();
             deathAnimTimer -= Time.deltaTime;
             if (deathAnimTimer <= 0f)
+            {
+                activeEnemies.Remove(this);
+                CheckIfShouldSwitchToBackgroundMusic();
                 Destroy(gameObject);
+            }
         }
+
         Debug.Log(health);
 
         // Detecting players and determining range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerMask);
+
+        bool shouldBeInCombat = playerInSightRange || playerInAttackRange;
+
+        if (shouldBeInCombat && !isInCombat)
+        {
+            SoundManager.instance.PlayMusic(combatMusic);
+            isInCombat = true;
+        }
+        else if (!shouldBeInCombat && isInCombat)
+        {
+            SoundManager.instance.PlayMusic(backgroundMusic);
+            isInCombat = false;
+        }
 
         if (!playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             Patroling();
@@ -88,6 +111,19 @@ public class Enemy : MonoBehaviour
 
         
     }
+
+    private void CheckIfShouldSwitchToBackgroundMusic()
+    {
+        foreach (var enemy in activeEnemies)
+        {
+            if (enemy.playerInSightRange || enemy.playerInAttackRange)
+                return; // Still in combat
+        }
+
+        // No enemies in combat
+        SoundManager.instance.PlayMusic(backgroundMusic);
+    }
+
 
     private void Patroling()
     {
