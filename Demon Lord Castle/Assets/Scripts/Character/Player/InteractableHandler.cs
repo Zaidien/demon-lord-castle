@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +9,16 @@ public class InteractableHandler : MonoBehaviour
     public float interactionRange = 3f;
     public Camera playerCamera;
     public GameObject interactTextUI;
+    private string interactMsg;
+    private string originalMsg;
     public string sceneToLoad = "NextSceneName"; // Replace with your target scene name
 
     // private SoundManager soundManager;
+
+    private void Start()
+    {
+        
+    }
 
     private void Awake()
     {
@@ -34,6 +42,17 @@ public class InteractableHandler : MonoBehaviour
                     return;
                 }
 
+                // Grab reference to the door portal
+                LevelLoaderSetter levelLoader = hit.collider.GetComponent<LevelLoaderSetter>();
+                if (levelLoader != null)
+                {
+                    sceneToLoad = levelLoader.sceneToLoad;
+                }
+                else
+                {
+                    Debug.LogWarning("LevelLoaderSetter.cs (script) not found on Door!");
+                    return ;
+                }
 
                 interactTextUI.SetActive(true);
 
@@ -44,19 +63,11 @@ public class InteractableHandler : MonoBehaviour
                         Debug.LogWarning("No scene to load!");
                         return;
                     }
-                    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-                    SceneManager.LoadScene(currentSceneIndex + 1);
+                    
+                    SceneManager.LoadScene(sceneToLoad);
                     SoundManager.instance?.PlaySelect();
                     interactTextUI.SetActive(false);
-
-                    if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
-                    {
-                        SceneManager.LoadScene(currentSceneIndex + 1);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("No more scenes in build settings.");
-                    }
+                   
 
                 }
             }

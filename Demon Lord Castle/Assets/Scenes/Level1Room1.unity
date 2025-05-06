@@ -745,6 +745,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e218d85170b17534698e04e1f84e661e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 939678117}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e218d85170b17534698e04e1f84e661e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 939678118}
   m_SourcePrefab: {fileID: 100100000, guid: e218d85170b17534698e04e1f84e661e, type: 3}
 --- !u!114 &220900002 stripped
 MonoBehaviour:
@@ -2646,6 +2649,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0145699745, y: 0.038878817, z: 0.04830172}
   m_Center: {x: -0.000022984656, y: 0.000000007618862, z: 0.024150835}
+--- !u!114 &939678118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939678114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238de125959843e47852d6dc3b2d8038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Level2Remade
 --- !u!1001 &949370910
 PrefabInstance:
   m_ObjectHideFlags: 0

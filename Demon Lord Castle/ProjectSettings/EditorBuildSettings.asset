@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2Remade.unity
     guid: 345e96845d7748f4f81f599c3cfe0d20
+  - enabled: 1
+    path: Assets/Scenes/DiningHall.unity
+    guid: 895979383ba70de48b6b87343a1e2bb9
+  - enabled: 1
+    path: Assets/Scenes/StudyHall.unity
+    guid: ddd473bb966b87145bc200ef9f285ce6
+  - enabled: 1
+    path: Assets/Scenes/ThroneRoom.unity
+    guid: 344e1b1960a1155459c31cfecb56a647
   m_configObjects: {}

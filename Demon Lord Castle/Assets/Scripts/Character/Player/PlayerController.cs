@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     // Ground Movement
     private Rigidbody rb;
     [SerializeField] private float MoveSpeed = 5f;
+    [SerializeField] private float sprintMultiplier = 1.5f;
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
     private float moveHorizontal;
     private float moveForward;
 
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public float health = 100;
     private float damageCooldownCount;
     private bool damageCooldown;
+    private float originalFootstepInterval;
 
 
     void Start()
@@ -60,6 +63,9 @@ public class PlayerController : MonoBehaviour
         // Hides the mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Saves float vaules
+        originalFootstepInterval = footstepInterval;
     }
 
     void Update()
@@ -109,9 +115,13 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
+        
+        bool isSprinting = Input.GetKey(sprintKey);
+        float currentSpeed = isSprinting ? MoveSpeed * sprintMultiplier : MoveSpeed;
+        
 
         Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
-        Vector3 targetVelocity = movement * MoveSpeed;
+        Vector3 targetVelocity = movement * currentSpeed;
 
         // Apply movement to the Rigidbody
         Vector3 velocity = rb.velocity;
