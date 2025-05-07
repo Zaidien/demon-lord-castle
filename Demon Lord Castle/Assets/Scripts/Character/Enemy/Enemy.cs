@@ -83,7 +83,6 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        Debug.Log(health);
 
         // Detecting players and determining range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
@@ -93,7 +92,14 @@ public class Enemy : MonoBehaviour
 
         if (shouldBeInCombat && !isInCombat)
         {
-            SoundManager.instance.PlayMusic(combatMusic);
+            try
+            {
+                SoundManager.instance.PlayMusic(combatMusic);
+            }
+            catch
+            {
+                Debug.Log("Failed to get Combat Music");
+            }
             isInCombat = true;
         }
         else if (!shouldBeInCombat && isInCombat)
@@ -103,7 +109,7 @@ public class Enemy : MonoBehaviour
         }
 
         if (!playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
-            Patroling();
+            ChasePlayer();
         if (playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
             ChasePlayer();
         if (playerInAttackRange && playerInSightRange && !animator.GetBool("isDying"))
@@ -121,7 +127,15 @@ public class Enemy : MonoBehaviour
         }
 
         // No enemies in combat
-        SoundManager.instance.PlayMusic(backgroundMusic);
+        try
+        {
+            SoundManager.instance.PlayMusic(backgroundMusic);
+        }
+        catch
+        {
+            Debug.Log("Failed to get Background Music");
+        }
+        
     }
 
 
@@ -165,8 +179,8 @@ public class Enemy : MonoBehaviour
 
         agent.SetDestination(player.transform.position);
         animator.SetBool("isMoving", true);
-        //if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
-        //    soundController.PlayEnemyIdle();
+        if (!soundController.idleIsPlaying && !soundController.attackIsPlaying && !soundController.deathIsPlaying && !soundController.hurtIsPlaying)
+            soundController.PlayEnemyIdle();
 
     }
 
