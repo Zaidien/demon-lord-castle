@@ -2094,6 +2094,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneMusicManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7221234310714408638, guid: d3f4a0c67fbda364485eb1a90655a471, type: 3}
+      propertyPath: combatMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 764f466adc8608d4892011461b314c3a, type: 3}
+    - target: {fileID: 7221234310714408638, guid: d3f4a0c67fbda364485eb1a90655a471, type: 3}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 764f466adc8608d4892011461b314c3a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

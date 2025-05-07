@@ -101,10 +101,10 @@ public class Enemy : MonoBehaviour
             }
             isInCombat = true;
         }
-        else if (!shouldBeInCombat && isInCombat)
+        //else if (!shouldBeInCombat && isInCombat)
         {
-            SoundManager.instance.PlayMusic(backgroundMusic);
-            isInCombat = false;
+      //      SoundManager.instance.PlayMusic(backgroundMusic);
+      //      isInCombat = false;
         }
 
         if (!playerInSightRange && !playerInAttackRange && !animator.GetBool("isDying"))
@@ -119,23 +119,19 @@ public class Enemy : MonoBehaviour
 
     private void CheckIfShouldSwitchToBackgroundMusic()
     {
-        foreach (var enemy in activeEnemies)
+        if (activeEnemies.Count == 0)
         {
-            if (enemy.playerInSightRange || enemy.playerInAttackRange)
-                return; // Still in combat
+            try
+            {
+                SoundManager.instance.PlayMusic(backgroundMusic);
+            }
+            catch
+            {
+                Debug.Log("Failed to get Background Music");
+            }
         }
-
-        // No enemies in combat
-        try
-        {
-            SoundManager.instance.PlayMusic(backgroundMusic);
-        }
-        catch
-        {
-            Debug.Log("Failed to get Background Music");
-        }
-        
     }
+
 
 
     private void Patroling()

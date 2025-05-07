@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 69288437}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 4.83, y: 6.51, z: 18.82}
+  m_LocalPosition: {x: 4.83, y: 6.35, z: 18.82}
   m_LocalScale: {x: 3.75101, y: 8.499192e+9, z: 2.8325424}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1680,11 +1680,11 @@ PrefabInstance:
     - target: {fileID: 7221234310714408638, guid: d3f4a0c67fbda364485eb1a90655a471, type: 3}
       propertyPath: combatMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 25d850cb58dac544ca5b06094411e431, type: 3}
+      objectReference: {fileID: 8300000, guid: 98134f2154793674a98d0d2f8c00df46, type: 3}
     - target: {fileID: 7221234310714408638, guid: d3f4a0c67fbda364485eb1a90655a471, type: 3}
       propertyPath: backgroundMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 25d850cb58dac544ca5b06094411e431, type: 3}
+      objectReference: {fileID: 8300000, guid: 57f4417f64733294fa2f268a0fe67c71, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
